@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día del Comunicador, Ani 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-bg: #ffcfe3;
+    --pink-bg-2: #ffb6d5;
+    --paper: #fffdf6;
+    --paper-line: #f3e3d9;
+    --ink: #6b4a3d;
+    --ink-soft: #8a6455;
+    --accent: #ef7fa8;
+    --accent-2: #f7b2c4;
+    --gold: #e7bd63;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at 12% 8%, #ffe1ee 0%, transparent 45%),
+      radial-gradient(circle at 88% 92%, #ffd7ea 0%, transparent 45%),
+      linear-gradient(160deg, var(--pink-bg) 0%, var(--pink-bg-2) 100%);
+    font-family: 'Patrick Hand', cursive;
+    color: var(--ink);
+  }
+
+  .stage{
+    min-height: 100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 28px 14px;
+    position: relative;
+  }
+
+  /* ---------- floating decorations (shared) ---------- */
+  .floaty{
+    position: fixed;
+    pointer-events:none;
+    opacity:.55;
+    filter: drop-shadow(0 2px 3px rgba(200,120,150,.25));
+    animation: drift 7s ease-in-out infinite;
+    z-index: 1;
+  }
+  @keyframes drift{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-10px) rotate(6deg); }
+  }
+  .f1{ top: 6%; left: 5%; width: 46px; animation-delay: .2s; }
+  .f2{ top: 12%; right: 6%; width: 34px; animation-delay: 1.4s; }
+  .f3{ bottom: 8%; left: 8%; width: 40px; animation-delay: .8s; }
+  .f4{ bottom: 14%; right: 9%; width: 30px; animation-delay: 2.2s; }
+
+  /* ---------- SCREEN 1: intro ---------- */
+  #intro{
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    transition: opacity .7s ease, visibility .7s ease;
+  }
+  #intro.hide{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .intro-card{
+    text-align:center;
+    max-width: 560px;
+    animation: floatIn 1s cubic-bezier(.2,.8,.25,1) both;
+  }
+  @keyframes floatIn{
+    from{ opacity:0; transform: translateY(22px) scale(.96); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  .intro-eyebrow{
+    font-family:'Caveat', cursive;
+    font-weight:600;
+    font-size: 1.3rem;
+    color: var(--ink-soft);
+    letter-spacing: .5px;
+  }
+
+  .intro-title{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    color: var(--accent);
+    line-height: 1.05;
+    margin: 6px 0 22px;
+    text-shadow: 0 3px 0 rgba(255,255,255,.6);
+  }
+
+  .intro-btn{
+    font-family:'Patrick Hand', cursive;
+    font-size: 1.35rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 22px -8px rgba(200, 60, 110, .55);
+    display:inline-flex;
+    align-items:center;
+    gap: 10px;
+    animation: bob 2.1s ease-in-out infinite;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .intro-btn:hover{
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 26px -8px rgba(200, 60, 110, .6);
+  }
+  .intro-btn:active{ transform: translateY(0) scale(.98); }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+
+  .intro-btn .env{
+    width: 22px; height: 22px;
+  }
+
+  /* ---------- SCREEN 2: letter ---------- */
+  #letter-screen{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .8s ease .1s, transform .8s ease .1s;
+  }
+  #letter-screen.show{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .envelope{
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    z-index: 2;
+  }
+
+  .frame{
+    position: relative;
+    background: var(--pink-bg-2);
+    border-radius: 26px;
+    padding: 22px;
+    box-shadow:
+      0 18px 40px -18px rgba(190, 90, 130, .55),
+      0 4px 10px rgba(190, 90, 130, .25);
+  }
+
+  .scallop-top, .scallop-bottom{
+    position:absolute;
+    left: 14px; right: 14px;
+    height: 22px;
+    background:
+      radial-gradient(circle at 11px 11px, transparent 10px, var(--pink-bg-2) 10.5px) repeat-x;
+    background-size: 22px 22px;
+  }
+  .scallop-top{ top: -11px; }
+  .scallop-bottom{ bottom: -11px; transform: scaleY(-1); }
+
+  .scallop-left, .scallop-right{
+    position:absolute;
+    top: 14px; bottom: 14px;
+    width: 22px;
+    background:
+      radial-gradient(circle at 11px 11px, transparent 10px, var(--pink-bg-2) 10.5px) repeat-y;
+    background-size: 22px 22px;
+  }
+  .scallop-left{ left: -11px; }
+  .scallop-right{ right: -11px; transform: scaleX(-1); }
+
+  .paper{
+    position: relative;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--paper) 0px,
+        var(--paper) 33px,
+        var(--paper-line) 34px
+      );
+    border-radius: 14px;
+    padding: 40px 30px 60px;
+    box-shadow: inset 0 0 0 1px rgba(230,180,150,.35);
+    overflow: hidden;
+  }
+
+  .date-line{
+    text-align:right;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+  }
+  .date-line span{
+    border-bottom: 1.5px dashed var(--accent-2);
+    padding-bottom: 1px;
+  }
+
+  .dear{
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: var(--accent);
+    margin: 4px 0 14px;
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .letter-body{
+    font-size: 1.24rem;
+    line-height: 34px;
+    color: var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  .letter-body p{ margin: 0; }
+
+  .signature{
+    margin-top: 18px;
+    text-align: right;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 2.6rem;
+    color: var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .signature .heart{
+    width: 22px; height: 22px;
+    display:inline-block;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.18); }
+  }
+
+  /* corner doodles inside the paper, like the reference sheet */
+  .doodle{
+    position:absolute;
+    opacity:.9;
+    z-index: 1;
+  }
+  .doodle.top-left{ top: 8px; left: 4px; width: 88px; }
+  .doodle.bottom-left{ bottom: 6px; left: 6px; width: 66px; }
+  .doodle.bottom-right{ bottom: 10px; right: 10px; width: 58px; }
+
+  .footer-note{
+    margin-top: 22px;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    opacity:.8;
+  }
+
+  @media (max-width: 480px){
+    .dear{ font-size: 2rem; }
+    .letter-body{ font-size: 1.1rem; line-height: 30px; }
+    .signature{ font-size: 2.1rem; }
+    .paper{ padding: 34px 18px 50px; }
+    .doodle.top-left{ width: 66px; }
+    .doodle.bottom-left{ width: 50px; }
+    .doodle.bottom-right{ width: 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .floaty, .intro-btn, .signature .heart{ animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- floating decorations, original doodles (clouds, star, heart, paw) -->
+  <svg class="floaty f1" viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="40" rx="18" ry="14" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"/><circle cx="16" cy="20" r="7" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"/><circle cx="48" cy="20" r="7" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"/><circle cx="24" cy="10" r="5" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"/><circle cx="40" cy="10" r="5" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"/></svg>
+  <svg class="floaty f2" viewBox="0 0 24 24" fill="#e7bd63"><path d="M12 1l2.9 6.9L22 9l-5.5 5 1.6 7.1L12 17.8 5.9 21.1 7.5 14 2 9l7.1-1.1z"/></svg>
+  <svg class="floaty f3" viewBox="0 0 64 40" fill="#fff" stroke="#ef7fa8" stroke-width="2.5"><path d="M14 30a10 10 0 0 1-2-19.8A13 13 0 0 1 37 8a10 10 0 0 1 13 9.6A9 9 0 0 1 48 30H14z"/></svg>
+  <svg class="floaty f4" viewBox="0 0 24 22" fill="#ef7fa8"><path d="M12 21s-9-5.6-9-12.3C3 4.9 6 2 9.4 2 11 2 12 3 12 3s1-1 2.6-1C18 2 21 4.9 21 8.7 21 15.4 12 21 12 21z"/></svg>
+
+  <!-- ===================== SCREEN 1: INTRO ===================== -->
+  <div id="intro" class="stage">
+    <div class="intro-card">
+      <div class="intro-eyebrow">11 de agosto · Día del Comunicador</div>
+      <div class="intro-title">Feliz día a la<br>mejor comunicadora</div>
+      <button class="intro-btn" onclick="openLetter()">
+        <svg class="env" viewBox="0 0 24 18" fill="none"><rect x="1" y="1" width="22" height="16" rx="2" fill="#fff"/><path d="M1 2l11 8 11-8" stroke="#ef7fa8" stroke-width="1.6" fill="none"/></svg>
+        Da click aquí
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== SCREEN 2: LETTER ===================== -->
+  <div id="letter-screen" class="stage">
+    <div class="envelope">
+      <div class="frame">
+        <div class="scallop-top"></div>
+        <div class="scallop-bottom"></div>
+        <div class="scallop-left"></div>
+        <div class="scallop-right"></div>
+
+        <div class="paper">
+          <!-- corner doodles, original style inspired by cute stationery -->
+          <svg class="doodle top-left" viewBox="0 0 100 60" fill="none">
+            <ellipse cx="30" cy="34" rx="16" ry="12" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+            <circle cx="16" cy="20" r="6" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+            <circle cx="42" cy="18" r="6" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+            <path d="M52 18c8-10 20-12 30-4" stroke="#e7bd63" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M52 18c4 6 4 14-2 18" stroke="#e7bd63" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+
+          <svg class="doodle bottom-left" viewBox="0 0 90 50" fill="none">
+            <ellipse cx="46" cy="30" rx="20" ry="13" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+            <circle cx="26" cy="18" r="7" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+            <circle cx="64" cy="16" r="6" fill="#fff" stroke="#ef7fa8" stroke-width="2"/>
+          </svg>
+
+          <svg class="doodle bottom-right" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="6" fill="#f7b2c4"/>
+            <circle cx="14" cy="20" r="4" fill="#f7b2c4"/>
+            <circle cx="46" cy="20" r="4" fill="#f7b2c4"/>
+            <circle cx="14" cy="42" r="4" fill="#f7b2c4"/>
+            <circle cx="46" cy="42" r="4" fill="#f7b2c4"/>
+          </svg>
+
+          <div class="date-line">date: <span>11 de agosto</span></div>
+          <div class="dear">Para mi damita, Ani.</div>
+
+          <div class="letter-body">
+            <p>Hoy, 11 de agosto, quería aprovechar para decirte algo que quizás ya sabes, pero igual nunca está de más recordártelo: feliz Día del Comunicador, mi reina.</p>
+            <p>Me alegra muchísimo verte seguir creciendo en algo que te gusta y que haces con ese estilo tuyo. Eres una comunicadora increíble, pero más allá de eso, eres una persona que admiro muchísimo.</p>
+            <p>Sé que a veces tienes días pesados, mil cosas en la cabeza y momentos donde seguramente quieres mandar todo a volar jajaja, pero aun así sigues adelante. Y eso también es parte de lo que hace tan especial a mi damita.</p>
+            <p>Así que hoy disfruta tu día, celébralo aunque sea un poquito y recuerda que tienes por acá a un negro que siempre va a estar haciendo barra por ti, molestándote, escuchándote y recordándote que eres la mejor comunicadora, la más bonita y una guerrera que no se rinde jamás.</p>
+            <p>Feliz Día del Comunicador, Ani.</p>
+            <p>Sigue siendo tu misma, que nadie apague tu brillo, siempre alza tu voz y deja tu huella, que todavía te queda muchísimo por conquistar.</p>
+            <p>Y sí... hoy tu esclavo está orgulloso de su comunicadora favorita jajajaja.</p>
+          </div>
+
+          <div class="signature">
+            <svg class="heart" viewBox="0 0 24 22" fill="#ef7fa8"><path d="M12 21s-9-5.6-9-12.3C3 4.9 6 2 9.4 2 11 2 12 3 12 3s1-1 2.6-1C18 2 21 4.9 21 8.7 21 15.4 12 21 12 21z"/></svg>
+            Tn
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">hecho con cariño, solo para ti 🎀</div>
+    </div>
+  </div>
+
+  <script>
+    function openLetter(){
+      document.getElementById('intro').classList.add('hide');
+      var letter = document.getElementById('letter-screen');
+      setTimeout(function(){
+        letter.classList.add('show');
+      }, 150);
+    }
+  </script>
+
+</body>
+</html>
